@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,12 +49,21 @@ public abstract class Animal implements Loudable {
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
+
+    // bark系は委譲してもらっています
+    // 継承のように強くない結びつき
+
+    protected BarkingProcess barkingProcess = createBarkingProcess();
+
+    // ファクトリーメソッドパターン(GoFデザインパターン)
+    // のこメソッドを小クラスでオーバーライドし、Animalの子クラスでBarkingProcessの子クラスを作りそこで中のメソッドをオーバーライドしてバーキングプロセスの処理を拡張できるようになっている
+    // 実態(BarkingProcess?ZonBieBarkingProcess?)と使っている側(barkingProcess.bark();)の認識を分離
+    protected BarkingProcess createBarkingProcess() {
+        return new BarkingProcess(this);
+    }
+
     public BarkedSound bark() {
-        breatheIn();
-        prepareAbdominalMuscle();
-        String barkWord = getBarkWord();
-        BarkedSound barkedSound = doBark(barkWord);
-        return barkedSound;
+        return barkingProcess.bark();
     }
 
     protected void prepareAbdominalMuscle() {
@@ -69,10 +78,9 @@ public abstract class Animal implements Loudable {
 
     protected abstract String getBarkWord();
 
-    protected BarkedSound doBark(String barkWord) {
-        downHitPoint();
-        return new BarkedSound(barkWord);
-    }
+    //    protected BarkedSound doBark(String barkWord) {
+    //        return barkingProcess.doBark(barkWord);
+    //    }
 
     // ===================================================================================
     //                                                                           Hit Point

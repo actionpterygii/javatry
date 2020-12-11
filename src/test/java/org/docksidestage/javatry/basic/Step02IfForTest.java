@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 7;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -67,7 +67,7 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 9;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -91,15 +91,23 @@ public class Step02IfForTest extends PlainTestCase {
         if (land) {
             sea = 10;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 10
     }
 
     // ===================================================================================
     //                                                                       for Statement
     //                                                                       =============
+    //        private List<String> prepareStageList() {
+    //    List<String> stageList = new ArrayList<>();
+    //    stageList.add("broadway");
+    //    stageList.add("dockside");
+    //    stageList.add("hangar");
+    //    stageList.add("magiclamp");
+    //    return stageList;
+    //}
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_for_inti_basic() {
-        List<String> stageList = prepareStageList();
+        List<String> stageList = prepareStageList(); // ネイティブな配列は要素の最大数を増やせない。これはいける（ラッパーしてる）
         String sea = null;
         for (int i = 0; i < stageList.size(); i++) {
             String stage = stageList.get(i);
@@ -107,7 +115,7 @@ public class Step02IfForTest extends PlainTestCase {
                 sea = stage;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -117,7 +125,7 @@ public class Step02IfForTest extends PlainTestCase {
         for (String stage : stageList) {
             sea = stage;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => magiclamp
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -128,12 +136,12 @@ public class Step02IfForTest extends PlainTestCase {
             if (stage.startsWith("br")) {
                 continue;
             }
-            sea = stage;
+            sea = stage; //dockside hangar
             if (stage.contains("ga")) {
                 break;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => hanger
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -141,15 +149,15 @@ public class Step02IfForTest extends PlainTestCase {
         List<String> stageList = prepareStageList();
         StringBuilder sb = new StringBuilder();
         stageList.forEach(stage -> {
-            if (sb.length() > 0) {
+            if (sb.length() > 0) { // n n y
                 return;
             }
-            if (stage.contains("i")) {
-                sb.append(stage);
+            if (stage.contains("i")) { // n y
+                sb.append(stage); // dockside
             }
         });
         String sea = sb.toString();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
     }
 
     // ===================================================================================
@@ -161,6 +169,14 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_making() {
         // write if-for here
+        List<String> stageList = prepareStageList();
+        List<String> stageListContainsA = new ArrayList<>(); // 具体的なものでnewして、最小限のもので受け取る(Listインターフェース)
+        for (String stage : stageList) {
+            if (stage.contains("a")) {
+                stageListContainsA.add(stage);
+            }
+        }
+        log(stageListContainsA);
     }
 
     // ===================================================================================
@@ -172,17 +188,28 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
-        String sea = null;
-        for (String stage : stageList) {
-            if (stage.startsWith("br")) {
-                continue;
+        //        String sea = null;
+        StringBuilder sb = new StringBuilder();
+        stageList.forEach(stage -> {
+            if (sb.length() > 0 || stage.startsWith("br")) {
+                return;
             }
-            sea = stage;
             if (stage.contains("ga")) {
-                break;
+                sb.append(stage);
+                log(stage);
             }
-        }
-        log(sea); // should be same as before-fix
+        });
+        //        for (String stage : stageList) {
+        //            if (stage.startsWith("br")) {
+        //                continue;
+        //            }
+        //            sea = stage;
+        //            if (stage.contains("ga")) {
+        //                break;
+        //            }
+        //        }
+
+        //        log(sea); // should be same as before-fix
     }
 
     /**

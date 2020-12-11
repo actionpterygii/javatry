@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  */
 package org.docksidestage.bizfw.basic.objanimal;
 
+import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
+import org.docksidestage.bizfw.basic.objanimal.sukidemokiraidemonai.Sukidemokiraidemonai;
+
 /**
  * The object for dog(犬).
  * @author jflute
  */
-public class Dog extends Animal {
+public class Dog extends Animal implements FastRunner, Sukidemokiraidemonai {
 
     // ===================================================================================
     //                                                                         Constructor
@@ -32,5 +35,11 @@ public class Dog extends Animal {
     //                                                                              ======
     protected String getBarkWord() {
         return "wan"; // bow? in English
+    }
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+
     }
 }

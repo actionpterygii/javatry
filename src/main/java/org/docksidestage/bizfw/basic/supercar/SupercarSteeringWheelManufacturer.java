@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 package org.docksidestage.bizfw.basic.supercar;
 
 import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer;
-import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer.SpecialScrew;
 import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer.ScrewSpec;
+import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer.SpecialScrew;
 
 /**
  * The manufacturer(製造業者) of supercar steering wheel(車のハンドル).
@@ -36,9 +36,14 @@ public class SupercarSteeringWheelManufacturer {
         ScrewSpec screwSpec = new ScrewSpec(specText);
 
         SpecialScrewManufacturer manufacturer = createSpecialScrewManufacturer();
-        SpecialScrew screw = manufacturer.makeSpecialScrew(screwSpec);
 
-        return new SteeringWheel(screw);
+        try {
+            SpecialScrew screw = manufacturer.makeSpecialScrew(screwSpec);
+            return new SteeringWheel(screw);
+        } catch (RuntimeException e) {
+            throw new SupercarSteeringWheelCannotMakeException("SpecialScrew Ga Tsukurenakatta Node SupercarSteeringWheel Ha Tsukuremasen");
+        }
+
     }
 
     protected SpecialScrewManufacturer createSpecialScrewManufacturer() {
@@ -49,6 +54,15 @@ public class SupercarSteeringWheelManufacturer {
 
         public SteeringWheel(SpecialScrew screw) {
             // dummy
+        }
+    }
+
+    public static class SupercarSteeringWheelCannotMakeException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+
+        public SupercarSteeringWheelCannotMakeException(String msg) {
+            super(msg);
         }
     }
 }

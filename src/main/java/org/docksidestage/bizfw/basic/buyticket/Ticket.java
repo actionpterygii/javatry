@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ public class Ticket {
     //                                                                           =========
     private final int displayPrice;
     private boolean alreadyIn;
+    private final int ONE_DAY_PRICE = TicketBooth.ONE_DAY_PRICE; // when 2019/06/15
+    private final int TWO_DAY_PRICE = TicketBooth.TWO_DAY_PRICE;
 
     // ===================================================================================
     //                                                                         Constructor
@@ -52,5 +54,15 @@ public class Ticket {
 
     public boolean isAlreadyIn() {
         return alreadyIn;
+    }
+
+    public String getTicketName() {
+        if (displayPrice == ONE_DAY_PRICE) {
+            return "いちんち";
+        } else if (displayPrice == TWO_DAY_PRICE) {
+            return "ふつか";
+        } else {
+            return "";
+        }
     }
 }

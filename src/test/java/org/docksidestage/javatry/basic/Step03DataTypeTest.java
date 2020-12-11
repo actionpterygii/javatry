@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,16 +45,17 @@ public class Step03DataTypeTest extends PlainTestCase {
         Boolean dstore = true;
         BigDecimal amba = new BigDecimal("9.4");
 
-        piari = piari.plusDays(1);
-        land = piari.getYear();
-        bonvo = bonvo.plusMonths(1);
-        land = bonvo.getMonthValue();
-        land--;
+        piari = piari.plusDays(1); //2001 09 05
+        land = piari.getYear(); //2001 
+        bonvo = bonvo.plusMonths(1); // 2001 10 4 12 34 56
+        land = bonvo.getMonthValue(); // 9 x-> 10
+        //        log(land);
+        land--; // 8 x-> 9
         if (dstore) {
-            BigDecimal addedDecimal = amba.add(new BigDecimal(land));
-            sea = String.valueOf(addedDecimal);
+            BigDecimal addedDecimal = amba.add(new BigDecimal(land)); // 17.4 x-> 18.4
+            sea = String.valueOf(addedDecimal); // 17.4 x-> 18.4
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => // 17.4 x-> 18.4
     }
 
     // ===================================================================================
@@ -69,20 +70,20 @@ public class Step03DataTypeTest extends PlainTestCase {
         float dstore = 2147483647.1f;
         double amba = 2.3d;
         char miraco = 'a';
-        boolean dohotel = miraco == 'a';
+        boolean dohotel = miraco == 'a'; // true
         if (dohotel && dstore >= piari) {
-            bonvo = sea;
-            land = (short) bonvo;
-            bonvo = piari;
-            sea = (byte) land;
-            if (amba == 2.3D) {
-                sea = (byte) amba;
+            bonvo = sea; // 127
+            land = (short) bonvo; // 127
+            bonvo = piari; // 2147483647
+            sea = (byte) land; // 127
+            if (amba == 2.3D) { // true
+                sea = (byte) amba; // 127 x-> 2
             }
         }
-        if (dstore > piari) {
-            sea = 0;
+        if (dstore > piari) { //true x-> false
+            sea = 0; // 0
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 0 x-> 2
     }
 
     // ===================================================================================
@@ -92,7 +93,7 @@ public class Step03DataTypeTest extends PlainTestCase {
     public void test_datatype_object() {
         St3ImmutableStage stage = new St3ImmutableStage("hangar");
         String sea = stage.getStageName();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => hangar
     }
 
     private static class St3ImmutableStage {

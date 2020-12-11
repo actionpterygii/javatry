@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
  * governing permissions and limitations under the License.
  */
 package org.docksidestage.javatry.basic;
+
+import java.io.File;
+import java.io.IOException;
 
 import org.docksidestage.bizfw.basic.supercar.SupercarClient;
 import org.docksidestage.javatry.basic.st7.St7ConstructorChallengeException;
@@ -51,35 +54,35 @@ public class Step07ExceptionTest extends PlainTestCase {
     public void test_exception_hierarchy_Runtime_instanceof_RuntimeException() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof RuntimeException;
-        log(sea); // your answer? => 
-    }
+        log(sea); // your answer? => true
+    } // インスタンス名、継承しているので
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Runtime_instanceof_Exception() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof Exception;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => true
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Runtime_instanceof_Error() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof Error;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => false
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Runtime_instanceof_Throwable() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof Throwable;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => true
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Throwable_instanceof_Exception() {
         Object exp = new Throwable("mystic");
         boolean sea = exp instanceof Exception;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => false
     }
 
     // ===================================================================================
@@ -90,6 +93,20 @@ public class Step07ExceptionTest extends PlainTestCase {
      * (new java.io.File(".") の canonical path を取得してログに表示、I/Oエラーはメッセージとスタックトレースを代わりに)
      */
     public void test_exception_checkedException_basic() {
+        try {
+            // テスト用
+            //            IOException e = new IOException("dummy");
+            // これはめったなことではIOExceptionしないので
+            // しかしとらいきゃっちはしないといけない
+            File file = new java.io.File("_!#$()=~|/{`}*+;:]@['").getCanonicalFile();
+            log(file);
+            // テスト用
+            //                throw e;
+        } catch (IOException e) {
+            // TODO: handle exception
+            log(e); // これがスタックトレースもだす
+            e.printStackTrace(); // コンソールにしか出力しないのでほんばんではつかわないもの
+        }
     }
 
     // ===================================================================================
@@ -110,9 +127,10 @@ public class Step07ExceptionTest extends PlainTestCase {
             Throwable cause = e.getCause();
             sea = cause.getMessage();
             land = cause.getClass().getSimpleName();
-            log(sea); // your answer? => 
-            log(land); // your answer? => 
-            log(e); // your answer? => 
+            log('a');
+            log(sea); // your answer? => Failed to call the third help method: -1
+            log(land); // your answer? => IllegalArgumentException
+            log(e); // your answer? => エラーとスタックトレース
         }
     }
 
@@ -148,6 +166,7 @@ public class Step07ExceptionTest extends PlainTestCase {
      * Execute this test and read exception message and write situation and cause on comment. <br>
      * テストを実行して、例外メッセージを読んで、状況と原因をコメント上に書きましょう。
      */
+    // 客が車を買えなかった理由
     public void test_exception_translation_debugChallenge() {
         try {
             new SupercarClient().buySupercar();
@@ -157,8 +176,8 @@ public class Step07ExceptionTest extends PlainTestCase {
             // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
             // What happens? Write situation and cause here. (何が起きた？状況と原因をここに書いてみましょう)
             // - - - - - - - - - -
-            //
-            //
+            // \(^_^)/になっているから
+            // 特殊なネジ屋さんのチェックか顔文字のはいった仕様書の間違いをなおすか
             //
             // _/_/_/_/_/_/_/_/_/_/
         }

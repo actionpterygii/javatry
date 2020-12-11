@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author iidatakayuki
  */
 public class Step01VariableTest extends PlainTestCase {
 
@@ -47,7 +47,7 @@ public class Step01VariableTest extends PlainTestCase {
         String piari = null;
         String dstore = "mai";
         sea = sea + land + piari + ":" + dstore;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => mystic8null:mai
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -56,7 +56,7 @@ public class Step01VariableTest extends PlainTestCase {
         String land = "oneman";
         sea = land;
         land = land + "'s dreams";
-        log(sea); // your answer? => 
+        log(sea); // your answer? => oneman
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -65,7 +65,7 @@ public class Step01VariableTest extends PlainTestCase {
         int land = 415;
         sea = land;
         land++;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 415
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -73,35 +73,35 @@ public class Step01VariableTest extends PlainTestCase {
         BigDecimal sea = new BigDecimal(94);
         BigDecimal land = new BigDecimal(415);
         sea = land;
-        sea = land.add(new BigDecimal(1));
-        sea.add(new BigDecimal(1));
-        log(sea); // your answer? => 
+        sea = land.add(new BigDecimal(1)); // 足したものを返すメソッドのため
+        sea.add(new BigDecimal(1)); // ダミー
+        log(sea); // your answer? => 416
     }
 
     // ===================================================================================
     //                                                                   Instance Variable
     //                                                                   =================
     private String instanceBroadway;
-    private int instanceDockside;
+    private int instanceDockside; // intはオブジェクトではない(プリミティブ) 数値しか入らないのでデフォルト0 処理早い(今はあまり気にされない)
     private Integer instanceHangar;
     private String instanceMagiclamp;
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_String() {
         String sea = instanceBroadway;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => null
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_int() {
         int sea = instanceDockside;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 0
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_Integer() {
         Integer sea = instanceHangar;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => null
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -110,13 +110,13 @@ public class Step01VariableTest extends PlainTestCase {
         instanceMagiclamp = "magician";
         helpInstanceVariableViaMethod(instanceMagiclamp);
         String sea = instanceBroadway + "|" + instanceDockside + "|" + instanceHangar + "|" + instanceMagiclamp;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => bigband | 1 | null | magician
     }
 
-    private void helpInstanceVariableViaMethod(String instanceMagiclamp) {
+    private void helpInstanceVariableViaMethod(String instanceMagiclamp) { // instanceMagiclamp という名前のローカル変数
         instanceBroadway = "bigband";
         ++instanceDockside;
-        instanceMagiclamp = "burn";
+        instanceMagiclamp = "burn"; // ローカル変数を書き換えただけ
     }
 
     // ===================================================================================
@@ -130,7 +130,7 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "harbor";
         int land = 415;
         helpMethodArgumentImmutableMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
@@ -146,13 +146,16 @@ public class Step01VariableTest extends PlainTestCase {
     public void test_variable_method_argument_mutable_methodcall() {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
-        helpMethodArgumentMethodcall(sea, land);
-        log(sea); // your answer? => 
+        helpMethodArgument(sea, land);
+        log(sea); // your answer? => harbor416
     }
 
-    private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
+    // オブジェクトは参照が渡されるため、メソッド内でそれのメソッドを呼んでもそれは取ってくるまえのインスタンスのものとなる。
+    private void helpMethodArgument(StringBuilder sea, int land) {
         ++land;
-        sea.append(land);
+        sea.append(land); // 自分自身(インスタンス)を書き換える 戻り値は自分自身(メソッドチェーンできる)
+        // '.'はインスタンスに対する処理
+        // '='は変数に対する処理
     }
 
     // -----------------------------------------------------
@@ -191,8 +194,35 @@ public class Step01VariableTest extends PlainTestCase {
      * o すべての変数をlog()でカンマ区切りの文字列で表示
      * </pre>
      */
+
+    private int piari;
+
+    /* javaのパッケージ
+     * ディレクトリの中は同じパッケージ
+     * その中にディレクトリを作っても(孫)別のパッケージとなる
+     * 継承はされないみたいな
+     * :
+     */
+
+    /* javaのスコープ
+     * public どこからでも
+     * protected 自身と自身を継承されたもので 及び パッケージ内で
+     * private 自身のみ
+     * 省略した場合はパッケージ内のみのスコープになる
+     * 
+     * ファイル構造に依存したプログラムはよくないので
+     * ・スコープ省略は使わない(お試しの場合や見せる場合はよき)
+     * ・protectedは継承的な意識のみで使うと心地よい
+     * :
+     */
+
+    // 
+
     public void test_variable_writing() {
         // define variables here
+        String sea = "mistic";
+        Integer land = null;
+        log(sea, land, piari); // 可変長引数でしてる それは配列で受け取られる 引数的には最後のみ指定可
     }
 
     // ===================================================================================
