@@ -41,7 +41,9 @@ public class SupercarSteeringWheelManufacturer {
             SpecialScrew screw = manufacturer.makeSpecialScrew(screwSpec);
             return new SteeringWheel(screw);
         } catch (RuntimeException e) {
-            throw new SupercarSteeringWheelCannotMakeException("SpecialScrew Ga Tsukurenakatta Node SupercarSteeringWheel Ha Tsukuremasen");
+            // スーパースクリュー が 作れなかった ので スーパーカーステアリングホイール は つくれません
+            throw new SupercarSteeringWheelCannotMakeException(
+                    "SpecialScrew Ga Tsukurenakatta Node SupercarSteeringWheel Ha Tsukuremasen: " + steeringWheelId, e);
         }
 
     }
@@ -59,10 +61,17 @@ public class SupercarSteeringWheelManufacturer {
 
     public static class SupercarSteeringWheelCannotMakeException extends RuntimeException {
 
+        // Javaは実行中のインスタンスをシリアライズして別のJava奴で(デシリアライズ)使えるようにできるクラス(インプリメンツシリアライズ君)がある
+        // 下のはそのためのID
+        // ランダムな数をいれるのが本当はよいが
+        // みんなよく 1L にする
+        // L は long型を表す
+        // 警告を消すためにつけているだけなので
+        // シリアライズできるクラスはそのIDを指定しないといけないのでやってる
         private static final long serialVersionUID = 1L;
 
-        public SupercarSteeringWheelCannotMakeException(String msg) {
-            super(msg);
+        public SupercarSteeringWheelCannotMakeException(String msg, Throwable cause) {
+            super(msg, cause);
         }
     }
 }
