@@ -24,19 +24,34 @@ import org.docksidestage.bizfw.basic.supercar.SupercarManufacturer.Supercar;
 public class SupercarDealer {
 
     public Supercar orderSupercar(String clientRequirement) {
-        SupercarManufacturer manufacturer = createSupercarManufacturer();
-        if (clientRequirement.contains("steering wheel is like sea")) {
-            return manufacturer.makeSupercar("piari");
-        } else if (clientRequirement.contains("steering wheel is useful on land")) {
-            return manufacturer.makeSupercar("land");
-        } else if (clientRequirement.contains("steering wheel has many shop")) {
-            return manufacturer.makeSupercar("piari");
-        } else {
-            throw new IllegalStateException("Cannot understand the client requirement: " + clientRequirement);
+
+        try {
+            SupercarManufacturer manufacturer = createSupercarManufacturer();
+            if (clientRequirement.contains("steering wheel is like sea")) {
+                return manufacturer.makeSupercar("piari");
+            } else if (clientRequirement.contains("steering wheel is useful on land")) {
+                return manufacturer.makeSupercar("land");
+            } else if (clientRequirement.contains("steering wheel has many shop")) {
+                return manufacturer.makeSupercar("piari");
+            } else {
+                throw new IllegalStateException("Cannot understand the client requirement: " + clientRequirement);
+            }
+        } catch (RuntimeException e) {
+            // スパーカー が 作れなかった ので スーパーカー は 販売できません
+            throw new SupercarCannotSaleException("Supercar Ga Tsukurenakatta Node Supercar Hannbaidekimasenn", e);
         }
     }
 
     protected SupercarManufacturer createSupercarManufacturer() {
         return new SupercarManufacturer();
+    }
+
+    public static class SupercarCannotSaleException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+
+        public SupercarCannotSaleException(String msg, Throwable cause) {
+            super(msg, cause);
+        }
     }
 }

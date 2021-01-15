@@ -208,7 +208,7 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             helpSurprisedYabaiCatch();
         } catch (St7ConstructorChallengeException e) {
-            log("Thrown by help method", e); // should show also "Caused-by" information
+            log("Thrown by help method", e); // should show also "Caused-by" information // 原因も表示する必要がある
         }
     }
 
@@ -216,11 +216,11 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             helpThrowIllegalState();
         } catch (IllegalStateException e) {
-            throw new St7ConstructorChallengeException("Failed to do something.");
+            throw new St7ConstructorChallengeException("Failed to do something.", e);
         }
     }
 
-    private void helpThrowIllegalState() { // simple implementation here
+    private void helpThrowIllegalState() { // simple implementation here　
         throw new IllegalStateException("something illegal");
     }
 }
