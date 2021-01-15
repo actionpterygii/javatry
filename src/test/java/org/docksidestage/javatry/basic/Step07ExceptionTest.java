@@ -103,7 +103,7 @@ public class Step07ExceptionTest extends PlainTestCase {
             // テスト用
             //                throw e;
         } catch (IOException e) {
-            // TODO: handle exception
+            // TODO: handle exception  // owari
             log(e); // これがスタックトレースもだす
             e.printStackTrace(); // コンソールにしか出力しないのでほんばんではつかわないもの
         }

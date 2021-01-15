@@ -35,7 +35,8 @@ public class SupercarManufacturer {
             return new Supercar(steeringWheel);
         } catch (RuntimeException e) {
             // スーパーカーステアリングホイール が 作れなかった ので スーパーカー は つくれません
-            throw new SupercarCannotMakeException("SupercarSteeringWheel Ga Tsukurenakatta Node Supercar Ha Tsukuremasen", e);
+            throw new SupercarCannotMakeException("SupercarSteeringWheel Ga Tsukurenakatta Node Supercar Ha Tsukuremasen: " + catalogKey,
+                    e);
         }
 
     }

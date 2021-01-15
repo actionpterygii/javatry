@@ -38,7 +38,7 @@ public class SupercarDealer {
             }
         } catch (RuntimeException e) {
             // スパーカー が 作れなかった ので スーパーカー は 販売できません
-            throw new SupercarCannotSaleException("Supercar Ga Tsukurenakatta Node Supercar Hannbaidekimasenn", e);
+            throw new SupercarCannotSaleException("Supercar Ga Tsukurenakatta Node Supercar Hannbaidekimasenn :" + clientRequirement, e);
         }
     }
 
