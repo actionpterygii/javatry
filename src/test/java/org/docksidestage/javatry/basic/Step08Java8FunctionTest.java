@@ -160,6 +160,10 @@ public class Step08Java8FunctionTest extends PlainTestCase {
     // ===================================================================================
     //                                                                            Optional
     //                                                                            ========
+
+    // ないかもしれないという概念もクラスになっている
+    // scalaにあったものの後追い実装されたjava
+
     /**
      * Are the strings by three log() methods same? (yes or no) <br>
      * (三つのlog()によって出力される文字列は同じでしょうか？ (yes or no))
@@ -177,7 +181,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         optMember.ifPresent(member -> {
             log(member.getMemberId(), member.getMemberName());
         });
-        // your answer? => 
+        // your answer? => yes
     }
 
     /**
@@ -193,7 +197,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         optMember.ifPresent(member -> {
             log(member.getMemberId(), member.getMemberName());
         });
-        // your answer? => 
+        // your answer? => yes
     }
 
     /**
@@ -203,12 +207,12 @@ public class Step08Java8FunctionTest extends PlainTestCase {
     public void test_java8_optional_map_flatMap() {
         St8DbFacade facade = new St8DbFacade();
 
-        St8Member oldmemberFirst = facade.oldselectMember(1);
+        St8Member oldmemberFirst = facade.oldselectMember(1); // 1, broadway, (11, "music")
         String sea;
         if (oldmemberFirst != null) {
-            St8Withdrawal withdrawal = oldmemberFirst.oldgetWithdrawal();
-            if (withdrawal != null) {
-                sea = withdrawal.oldgetPrimaryReason();
+            St8Withdrawal withdrawal = oldmemberFirst.oldgetWithdrawal(); // 11, "music"
+            if (withdrawal != null) { // y
+                sea = withdrawal.oldgetPrimaryReason(); // music
             } else {
                 sea = "*no reason1";
             }
@@ -216,32 +220,32 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             sea = "*no reason2";
         }
 
-        Optional<St8Member> optMemberFirst = facade.selectMember(1);
+        Optional<St8Member> optMemberFirst = facade.selectMember(1); // 1, broadway
         String land = optMemberFirst.flatMap(mb -> mb.getWithdrawal()).flatMap(wdl -> wdl.getPrimaryReason()).orElse("*no reason");
 
         String piari = optMemberFirst.flatMap(mb -> {
             return mb.getWithdrawal();
         }).map(wdl -> {
             return wdl.oldgetPrimaryReason();
-        }).orElse("*no reason");
+        }).orElse("*no reason"); // 
 
-        String bonvo = facade.selectMember(2).flatMap(mb -> {
-            return mb.getWithdrawal();
-        }).map(wdl -> wdl.oldgetPrimaryReason()).orElse("*no reason");
+        String bonvo = facade.selectMember(2).flatMap(mb -> { // 2, dockside, (12, null)
+            return mb.getWithdrawal(); // 12, null
+        }).map(wdl -> wdl.oldgetPrimaryReason()).orElse("*no reason"); // null ===>>> noreason
 
-        String dstore = facade.selectMember(3) //
-                .flatMap(mb -> mb.getWithdrawal()) //
-                .flatMap(wdl -> wdl.getPrimaryReason()) //
+        String dstore = facade.selectMember(3) // 3, hangar, null
+                .flatMap(mb -> mb.getWithdrawal()) // null
+                .flatMap(wdl -> wdl.getPrimaryReason()) // noreason
                 .orElse("*no reason");
 
         Integer amba = facade.selectMember(2).flatMap(mb -> mb.getWithdrawal()).map(wdl -> wdl.getWithdrawalId()).orElse(-1);
 
-        log(sea); // your answer? => 
-        log(land); // your answer? => 
-        log(piari); // your answer? => 
-        log(bonvo); // your answer? => 
-        log(dstore); // your answer? => 
-        log(amba); // your answer? => 
+        log(sea); // your answer? => music
+        log(land); // your answer? => music
+        log(piari); // your answer? => music
+        log(bonvo); // your answer? => *no reason
+        log(dstore); // your answer? => *no reason
+        log(amba); // your answer? => 12
     }
 
     /**
@@ -249,18 +253,18 @@ public class Step08Java8FunctionTest extends PlainTestCase {
      * (メソッド終了時の変数 sea の中身は？)
      */
     public void test_java8_optional_orElseThrow() {
-        Optional<St8Member> optMember = new St8DbFacade().selectMember(2);
-        St8Member member = optMember.orElseThrow(() -> new IllegalStateException("over"));
+        Optional<St8Member> optMember = new St8DbFacade().selectMember(2); // 2, dockside, (12, null)
+        St8Member member = optMember.orElseThrow(() -> new IllegalStateException("over")); //ya
         String sea = "the";
         try {
-            String reason = member.getWithdrawal().map(wdl -> wdl.oldgetPrimaryReason()).orElseThrow(() -> {
+            String reason = member.getWithdrawal().map(wdl -> wdl.oldgetPrimaryReason()).orElseThrow(() -> { //oh
                 return new IllegalStateException("wave");
             });
             sea = reason;
         } catch (IllegalStateException e) {
             sea = e.getMessage();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wave
     }
 
     // ===================================================================================

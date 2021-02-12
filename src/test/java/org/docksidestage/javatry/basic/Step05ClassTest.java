@@ -178,9 +178,9 @@ public class Step05ClassTest extends PlainTestCase {
 
     }
 
-    public void qqq() {
-        TicketBooth booth = new TicketBooth();
-    }
+    //    public void qqq() {
+    //        TicketBooth booth = new TicketBooth();
+    //    }
 
     // ===================================================================================
     //                                                                           Good Luck
