@@ -15,6 +15,7 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
@@ -118,8 +119,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (BoxSpace space : spaceList) {
                 Object content = space.getContent();
                 if (content != null) {
-                    String stringContent = (String) content.toString();
+                    String stringContent = content.toString();
                     if (sinLongestString.length() < stringContent.length()) {
+                        longestString = sinLongestString;
                         sinLongestString = stringContent;
                     } else {
                         if (longestString.length() < stringContent.length()) {
@@ -130,6 +132,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             }
         }
         log("入っているもので二番目に大きいもの: " + longestString);
+        // 
     }
 
     /**
@@ -157,7 +160,17 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
     public void test_length_findMaxColorSize() {
-
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> longestColorNames = new ArrayList<String>();
+        for (ColorBox colorBox : colorBoxList) {
+            BoxColor boxColor = colorBox.getColor();
+            String colorName = boxColor.getColorName();
+            log(colorName);
+            if (longestColorName.length() < colorName.length()) {
+                longestColorName = colorName;
+            }
+        }
+        log("最も長い色の名前: " + longestColorName);
     }
 
     // ===================================================================================
