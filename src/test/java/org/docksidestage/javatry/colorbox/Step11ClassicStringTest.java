@@ -76,7 +76,6 @@ public class Step11ClassicStringTest extends PlainTestCase {
             }
         }
         log("Stringで入っているもので最も大きいもの: " + longestString);
-
     }
 
     /**
@@ -84,6 +83,26 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長いものと短いものの差は何文字？)
      */
     public void test_length_findMaxMinDiff() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String longestString = "";
+        String shortestString = "";
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String stringContent = (String) content;
+                    if (longestString.length() < stringContent.length()) {
+                        longestString = stringContent;
+                    }
+                    if (shortestString.length() > stringContent.length()) {
+                        shortestString = stringContent;
+                    }
+                }
+            }
+        }
+        int stringDiff = longestString.length() - shortestString.length();
+        log("Stringで入っているもので最も大きいものと小さいものの文字数差: " + stringDiff);
     }
 
     /**
@@ -91,6 +110,26 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
     public void test_length_findSecondMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String longestString = "";
+        String sinLongestString = "";
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content != null) {
+                    String stringContent = (String) content.toString();
+                    if (sinLongestString.length() < stringContent.length()) {
+                        sinLongestString = stringContent;
+                    } else {
+                        if (longestString.length() < stringContent.length()) {
+                            longestString = stringContent;
+                        }
+                    }
+                }
+            }
+        }
+        log("入っているもので二番目に大きいもの: " + longestString);
     }
 
     /**
@@ -98,6 +137,19 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の長さの合計は？)
      */
     public void test_length_calculateLengthSum() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int totalLength = 0;
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String stringContent = (String) content;
+                    totalLength += stringContent.length();
+                }
+            }
+        }
+        log("Stringで入っているものの文字数の合計: " + totalLength);
     }
 
     /**
@@ -105,6 +157,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
     public void test_length_findMaxColorSize() {
+
     }
 
     // ===================================================================================
