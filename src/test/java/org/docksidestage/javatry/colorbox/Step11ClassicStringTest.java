@@ -162,15 +162,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_findMaxColorSize() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> longestColorNames = new ArrayList<String>();
+        String buffLongestColorName = "";
         for (ColorBox colorBox : colorBoxList) {
             BoxColor boxColor = colorBox.getColor();
             String colorName = boxColor.getColorName();
-            log(colorName);
-            if (longestColorName.length() < colorName.length()) {
-                longestColorName = colorName;
+            if (buffLongestColorName.length() < colorName.length()) {
+                longestColorNames.clear();
+                longestColorNames.add(colorName);
+                buffLongestColorName = colorName;
+            } else if (buffLongestColorName.length() == colorName.length()) {
+                longestColorNames.add(colorName);
             }
         }
-        log("最も長い色の名前: " + longestColorName);
+        for (String longestColorName : longestColorNames) {
+            log("最も長い色の名前: " + longestColorName);
+        }
     }
 
     // ===================================================================================
@@ -181,6 +187,18 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * ("Water" で始まる文字列をしまっているカラーボックスの色は？)
      */
     public void test_startsWith_findFirstWord() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    if (((String) content).startsWith("Water")) {
+                        log(colorBox.getColor());
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -188,6 +206,18 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * ("front" で終わる文字列をしまっているカラーボックスの色は？)
      */
     public void test_endsWith_findLastWord() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    if (((String) content).endsWith("front")) {
+                        log(colorBox.getColor());
+                    }
+                }
+            }
+        }
     }
 
     // ===================================================================================
@@ -198,6 +228,19 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列で、最初の "front" は何文字目から始まる？)
      */
     public void test_indexOf_findIndex() {
+        String targetString = "front";
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    if (((String) content).endsWith(targetString)) {
+                        log(((String) content).indexOf(targetString) + 1);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -205,6 +248,22 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる「ど」を二つ以上含む文字列で、最後の「ど」は何文字目から始まる？ (e.g. "どんどん" => 3))
      */
     public void test_lastIndexOf_findIndex() {
+        char target = 'ど';
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    if (((String) content).endsWith(String.valueOf(target))) {
+                        int charCount = 0;
+                        for (int i = 0; i < content.length(); i++) {
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // ===================================================================================
