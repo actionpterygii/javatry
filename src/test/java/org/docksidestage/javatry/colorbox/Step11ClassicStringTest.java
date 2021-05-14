@@ -235,8 +235,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (BoxSpace space : spaceList) {
                 Object content = space.getContent();
                 if (content instanceof String) {
-                    if (((String) content).endsWith(targetString)) {
-                        log(((String) content).indexOf(targetString) + 1);
+                    String stringContent = (String) content;
+                    if (stringContent.endsWith(targetString)) {
+                        log(stringContent.indexOf(targetString) + 1);
                     }
                 }
             }
@@ -255,10 +256,15 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (BoxSpace space : spaceList) {
                 Object content = space.getContent();
                 if (content instanceof String) {
-                    if (((String) content).endsWith(String.valueOf(target))) {
+                    String stringContent = (String) content;
+                    if (stringContent.endsWith(String.valueOf(target))) {
                         int charCount = 0;
-                        for (int i = 0; i < content.length(); i++) {
-
+                        for (int i = 0; i < stringContent.length(); i++) {
+                            char stringContentChar = stringContent.charAt(i);
+                            if (stringContentChar == target) {
+                                charCount++;
+                            }
+                            //                            2以上なら
                         }
                     }
                 }
