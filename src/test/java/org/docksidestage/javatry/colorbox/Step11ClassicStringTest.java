@@ -257,15 +257,15 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 Object content = space.getContent();
                 if (content instanceof String) {
                     String stringContent = (String) content;
-                    if (stringContent.endsWith(String.valueOf(target))) {
-                        int charCount = 0;
-                        for (int i = 0; i < stringContent.length(); i++) {
-                            char stringContentChar = stringContent.charAt(i);
-                            if (stringContentChar == target) {
-                                charCount++;
-                            }
-                            //                            2以上なら
+                    int charCount = 0;
+                    for (int i = 0; i < stringContent.length(); i++) {
+                        char stringContentChar = stringContent.charAt(i);
+                        if (stringContentChar == target) {
+                            charCount++;
                         }
+                    }
+                    if (charCount >= 2) {
+                        log(stringContent.lastIndexOf(target) + 1);
                     }
                 }
             }
@@ -280,6 +280,20 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列の最初の一文字は？)
      */
     public void test_substring_findFirstChar() {
+        String targetString = "front";
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String stringContent = (String) content;
+                    if (stringContent.endsWith(targetString)) {
+                        log(stringContent.substring(0, 1));
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -287,6 +301,19 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "Water" で始まる文字列の最後の一文字は？)
      */
     public void test_substring_findLastChar() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String stringContent = (String) content;
+                    if (stringContent.startsWith("Water")) {
+                        log(stringContent.substring(stringContent.length() - 1));
+                    }
+                }
+            }
+        }
     }
 
     // ===================================================================================
@@ -297,6 +324,29 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "o" (おー) を含んだ文字列から "o" を全て除去したら何文字？)
      */
     public void test_replace_remove_o() {
+        char target = 'o';
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof String) {
+                    String stringContent = (String) content;
+                    int charCount = 0;
+                    for (int i = 0; i < stringContent.length(); i++) {
+                        char stringContentChar = stringContent.charAt(i);
+                        if (stringContentChar == target) {
+                            charCount++;
+                            break;
+                        }
+                    }
+                    if (charCount >= 1) {
+                        String replacedStringContent = stringContent.replace(String.valueOf(target), "");
+                        log(replacedStringContent.length());
+                    }
+                }
+            }
+        }
     }
 
     /**
