@@ -15,6 +15,7 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom.DevilBox;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom.DevilBoxTextNotFoundException;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -354,6 +357,18 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * カラーボックスに入ってる java.io.File のパス文字列のファイルセパレーターの "/" を、Windowsのファイルセパレーターに置き換えた文字列は？
      */
     public void test_replace_fileseparator() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof java.io.File) {
+                    String stringContent = ((File) content).getAbsolutePath();
+                    String replacedStringContent = stringContent.replace("/", "\\");
+                    log(replacedStringContent.length());
+                }
+            }
+        }
     }
 
     // ===================================================================================
@@ -364,6 +379,27 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
+        int devilBoxStringLength = 0;
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof DevilBox) {
+                    ((DevilBox) content).wakeUp();
+                    ((DevilBox) content).allowMe();
+                    ((DevilBox) content).open();
+                    String text = "";
+                    try {
+                        text = ((DevilBox) content).getText();
+                    } catch (DevilBoxTextNotFoundException msg) {
+                        text = "";
+                    }
+                    devilBoxStringLength += text.length();
+                }
+            }
+        }
+        log(devilBoxStringLength);
     }
 
     // ===================================================================================
@@ -374,6 +410,16 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
     public void test_showMap_flat() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for (ColorBox colorBox : colorBoxList) {
+            List<BoxSpace> spaceList = colorBox.getSpaceList();
+            for (BoxSpace space : spaceList) {
+                Object content = space.getContent();
+                if (content instanceof java.util.Map) {
+                    log(content);
+                }
+            }
+        }
     }
 
     /**
